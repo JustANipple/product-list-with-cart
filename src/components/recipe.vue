@@ -1,26 +1,66 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps(["image", "category", "name", "price"]);
+const emit = defineEmits(["add-to-cart", "remove-from-cart"]);
 
 const priceWithDecimal = computed(() => {
     return props.price.toFixed(2);
 });
+
+const quantity = ref(0);
+const isInCart = computed(() => quantity.value > 0);
+function addToCart() {
+    quantity.value++;
+    emit("add-to-cart");
+}
+
+function removeFromCart() {
+    quantity.value--;
+    emit("remove-from-cart");
+}
 </script>
 
 <template>
     <div class="recipe">
         <div class="recipeTop">
-            <img :src="props.image" alt="recipe image" class="recipeImage" />
-            <button type="button" class="addButton">
+            <img
+                :src="props.image"
+                alt="recipe image"
+                class="recipeImage"
+                :class="{ isBordered: isInCart }"
+            />
+            <button
+                type="button"
+                class="textPresetFourBold addButton"
+                @click="addToCart"
+                v-if="quantity === 0"
+            >
                 <img src="/images/icon-add-to-cart.svg" alt="cart icon" />
-                Add to cart
+                Add to Cart
+            </button>
+            <button type="button" class="textPresetFourBold editButton" v-else>
+                <div @click="removeFromCart">
+                    <img
+                        src="/images/icon-decrement-quantity.svg"
+                        alt="decrement icon"
+                    />
+                </div>
+                {{ quantity }}
+                <div @click="addToCart">
+                    <img
+                        src="/images/icon-increment-quantity.svg"
+                        alt="increment icon"
+                    />
+                </div>
             </button>
         </div>
         <div class="recipeBottom">
-            <span class="recipeCategory">{{ props.category }}</span>
-            <p class="recipeName">{{ props.name }}</p>
-            <p class="recipeTitle">${{ priceWithDecimal }}</p>
+            <span class="textPresetFour recipeCategory">{{
+                props.category
+            }}</span>
+            <p class="textPresetThree recipeName">{{ props.name }}</p>
+            <p class="textPresetThree recipeTitle">${{ priceWithDecimal }}</p>
         </div>
     </div>
 </template>
@@ -29,27 +69,27 @@ const priceWithDecimal = computed(() => {
 .recipe {
     display: grid;
     row-gap: 16px;
+    max-width: fit-content;
 }
 
 .recipeTop {
-    height: 234px;
-    display: flex;
-    justify-content: center;
-    align-items: end;
     position: relative;
+    z-index: 0;
 }
 
 .recipeImage {
     height: 212px;
     margin-block-end: auto;
     border-radius: 8px;
+    position: relative;
+    z-index: -1;
+}
+
+.isBordered {
+    border: 2px solid var(--red);
 }
 
 .addButton {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     margin-inline: auto;
     max-width: fit-content;
     display: flex;
@@ -57,32 +97,51 @@ const priceWithDecimal = computed(() => {
     border-radius: 2rem;
     background-color: white;
     border: 1px solid var(--rose-400);
-    padding-block: 12px;
-    padding-inline: 24px;
+    padding-block: 10px;
+    padding-inline: 26px;
     color: var(--rose-900);
-    font-size: 14px;
-    font-weight: var(--fw-semiBold);
+    margin-block-start: -22px;
+}
+
+.editButton {
+    width: 160px;
+    background-color: var(--red);
+    padding-block: 11px;
+    padding-inline: 12px;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: unset;
+    margin-inline: auto;
+    margin-block-start: -22px;
+    color: white;
+}
+
+.editButton div {
+    border: 1px solid white;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .recipeBottom {
     display: grid;
-    row-gap: 4px;
+    row-gap: 1.25px;
 }
 
 .recipeCategory {
-    font-size: 14px;
     color: var(--rose-500);
 }
 
 .recipeName {
-    font-size: var(--fs-body);
-    font-weight: var(--fw-semiBold);
     color: var(--rose-900);
 }
 
 .recipeTitle {
-    font-size: var(--fs-body);
-    font-weight: var(--fw-semiBold);
     color: var(--red);
 }
 </style>
