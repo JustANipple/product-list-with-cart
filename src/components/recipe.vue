@@ -1,22 +1,20 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const props = defineProps(["image", "category", "name", "price"]);
+const props = defineProps(["image", "category", "name", "price", "quantity"]);
 const emit = defineEmits(["add-to-cart", "remove-from-cart"]);
 
 const priceWithDecimal = computed(() => {
     return props.price.toFixed(2);
 });
 
-const quantity = ref(0);
-const isInCart = computed(() => quantity.value > 0);
+const isInCart = computed(() => props.quantity > 0);
+
 function addToCart() {
-    quantity.value++;
     emit("add-to-cart");
 }
 
 function removeFromCart() {
-    quantity.value--;
     emit("remove-from-cart");
 }
 </script>
@@ -34,7 +32,7 @@ function removeFromCart() {
                 type="button"
                 class="textPresetFourBold addButton"
                 @click="addToCart"
-                v-if="quantity === 0"
+                v-if="props.quantity === 0"
             >
                 <img src="/images/icon-add-to-cart.svg" alt="cart icon" />
                 Add to Cart
@@ -46,7 +44,7 @@ function removeFromCart() {
                         alt="decrement icon"
                     />
                 </div>
-                {{ quantity }}
+                {{ props.quantity }}
                 <div @click="addToCart">
                     <img
                         src="/images/icon-increment-quantity.svg"
