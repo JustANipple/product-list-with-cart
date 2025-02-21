@@ -32,14 +32,24 @@ function removeFromCart(name) {
 
 function showModal() {
     isConfirmed.value = true;
-    console.log(isConfirmed.value);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => {
+        document.querySelector("body").style.height = "100%";
+        document.querySelector("body").style.overflow = "hidden";
+    }, 800);
+}
+
+function hideModal() {
+    cartList.value.forEach((item) => (item.quantity = 0));
+    isConfirmed.value = false;
+    document.querySelector("body").style.height = "100vh";
+    document.querySelector("body").style.overflow = "unset";
 }
 </script>
 
 <template>
     <main class="desserts">
         <h1 class="textPresetOne mainTitle">Desserts</h1>
-        {{ isConfirmed }}
         <div class="recipeList">
             <recipe
                 v-for="(item, index) in cartList"
@@ -59,8 +69,8 @@ function showModal() {
             @show-modal="showModal"
         />
     </main>
-    <main v-show="isConfirmed" class="modalContainer">
-        <modal :cart-list="cartList" />
+    <main v-if="isConfirmed" class="modalContainer">
+        <modal :cart-list="cartList" @hide-modal="hideModal" />
     </main>
 </template>
 
