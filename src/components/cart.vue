@@ -243,4 +243,14 @@ function showModal() {
     border-radius: 2rem;
     color: white;
 }
+
+@media screen and (min-width: 1440px) {
+    .cart {
+        grid-column-start: 9;
+        grid-column-end: 13;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        place-content: flex-start;
+    }
+}
 </style>

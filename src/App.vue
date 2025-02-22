@@ -126,4 +126,27 @@ function getRecipeImage(item) {
         row-gap: 32px;
     }
 }
+
+@media screen and (min-width: 1440px) {
+    .desserts {
+        padding-block: 88px;
+        display: grid;
+        place-content: center;
+        grid-template-columns: repeat(12, 72px);
+        gap: 32px;
+    }
+
+    .mainTitle {
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+
+    .recipeList {
+        grid-column-start: 1;
+        grid-column-end: 9;
+        grid-row-start: 2;
+    }
+}
 </style>
