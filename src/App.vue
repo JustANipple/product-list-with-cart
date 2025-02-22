@@ -9,6 +9,7 @@ import { ref } from "vue";
 const datas = jsonData;
 const cartList = ref([]);
 const isConfirmed = ref(false);
+const windowWidth = ref(window.innerWidth);
 
 for (const data of datas) {
     const recipe = {
@@ -45,6 +46,16 @@ function hideModal() {
     document.querySelector("body").style.height = "100vh";
     document.querySelector("body").style.overflow = "unset";
 }
+
+function getRecipeImage(item) {
+    if (windowWidth < 768) {
+        return item.image.mobile;
+    } else if (windowWidth < 1440) {
+        return item.image.tablet;
+    } else {
+        return item.image.desktop;
+    }
+}
 </script>
 
 <template>
@@ -53,7 +64,7 @@ function hideModal() {
         <div class="recipeList">
             <recipe
                 v-for="(item, index) in cartList"
-                :image="item.image.mobile"
+                :image="getRecipeImage(item)"
                 :category="item.category"
                 :name="item.name"
                 :price="item.price"
@@ -101,5 +112,18 @@ function hideModal() {
     bottom: 0;
     display: flex;
     align-items: flex-end;
+}
+
+@media screen and (min-width: 768px) {
+    .desserts {
+        padding: 40px;
+    }
+
+    .recipeList {
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 24px;
+        row-gap: 32px;
+    }
 }
 </style>

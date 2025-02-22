@@ -142,4 +142,10 @@ function removeFromCart() {
 .recipeTitle {
     color: var(--red);
 }
+
+@media screen and (min-width: 768px) {
+    .recipe {
+        flex: 1 1 calc(33.33% - 24px);
+    }
+}
 </style>
