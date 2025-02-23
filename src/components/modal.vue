@@ -213,4 +213,14 @@ function hideModal() {
     color: white;
     padding: 16px 24px;
 }
+
+@media screen and (min-width: 768px) {
+    .modal {
+        padding: 40px;
+        margin-block-start: unset;
+        margin-inline: auto;
+        border-radius: 12px;
+        max-width: 592px;
+    }
+}
 </style>

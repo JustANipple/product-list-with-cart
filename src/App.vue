@@ -125,6 +125,12 @@ function getRecipeImage(item) {
         column-gap: 24px;
         row-gap: 32px;
     }
+
+    .modalContainer {
+        padding: 40px;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 @media screen and (min-width: 1440px) {
@@ -146,7 +152,6 @@ function getRecipeImage(item) {
     .recipeList {
         grid-column-start: 1;
         grid-column-end: 9;
-        grid-row-start: 2;
     }
 }
 </style>

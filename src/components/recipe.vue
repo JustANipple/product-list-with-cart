@@ -38,14 +38,14 @@ function removeFromCart() {
                 Add to Cart
             </button>
             <button type="button" class="textPresetFourBold editButton" v-else>
-                <div @click="removeFromCart">
+                <div @click="removeFromCart" class="decrementIconContainer">
                     <img
                         src="/images/icon-decrement-quantity.svg"
                         alt="decrement icon"
                     />
                 </div>
                 {{ props.quantity }}
-                <div @click="addToCart">
+                <div @click="addToCart" class="incrementIconContainer">
                     <img
                         src="/images/icon-increment-quantity.svg"
                         alt="increment icon"
@@ -146,6 +146,33 @@ function removeFromCart() {
 @media screen and (min-width: 768px) {
     .recipe {
         flex: 1 1 calc(33.33% - 24px);
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .recipeImage {
+        height: 240px;
+    }
+
+    .addButton {
+        transition: all 0.125s ease-in-out;
+    }
+
+    .addButton:hover {
+        cursor: pointer;
+        border-color: var(--red);
+        color: var(--red);
+    }
+
+    .decrementIconContainer,
+    .incrementIconContainer {
+        transition: all 0.125s ease-in-out;
+    }
+
+    .decrementIconContainer:hover,
+    .incrementIconContainer:hover {
+        cursor: pointer;
+        background-color: #952c0b;
     }
 }
 </style>

@@ -250,7 +250,20 @@ function showModal() {
         grid-column-end: 13;
         grid-row-start: 1;
         grid-row-end: 3;
-        place-content: flex-start;
+        height: fit-content;
+    }
+
+    .confirmButton {
+        transition: all 0.125s ease-in-out;
+    }
+
+    .confirmButton:hover {
+        cursor: pointer;
+        background-color: #952c0b;
+    }
+
+    .containerRight:hover {
+        cursor: pointer;
     }
 }
 </style>
